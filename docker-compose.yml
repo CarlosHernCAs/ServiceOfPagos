@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  # PostgreSQL
+  postgres:
+    image: postgres:16-alpine
+    container_name: facturacion_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: facturacion_db
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - facturacion_network
+
+  # Redis (para cache y colas)
+  redis:
+    image: redis:7-alpine
+    container_name: facturacion_redis
+    restart: unless-stopped
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis_data:/data
+    networks:
+      - facturacion_network
+
+  # pgAdmin (opcional, para administrar BD)
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: facturacion_pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@facturacion.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - '5050:80'
+    depends_on:
+      - postgres
+    networks:
+      - facturacion_network
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  facturacion_network:
+    driver: bridge

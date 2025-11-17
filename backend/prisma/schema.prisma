@@ -1,0 +1,373 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// USUARIOS Y AUTENTICACIÓN
+// ============================================
+
+model Usuario {
+  id                String   @id @default(uuid())
+  email             String   @unique
+  password          String
+  nombre            String
+  apellido          String?
+  rol               RolUsuario @default(USUARIO)
+  activo            Boolean  @default(true)
+  ultimoAcceso      DateTime?
+
+  // Auditoría
+  creadoEn          DateTime @default(now())
+  actualizadoEn     DateTime @updatedAt
+
+  // Relaciones
+  facturasCreadas   Factura[] @relation("UsuarioCreador")
+
+  @@map("usuarios")
+}
+
+enum RolUsuario {
+  ADMINISTRADOR
+  VENDEDOR
+  CONTADOR
+  USUARIO
+}
+
+// ============================================
+// CLIENTES
+// ============================================
+
+model Cliente {
+  id                String   @id @default(uuid())
+
+  // Datos fiscales
+  razonSocial       String
+  nombreComercial   String?
+  rfc               String   @unique
+  regimenFiscal     String
+  usoCfdi           String   @default("G03")
+
+  // Contacto
+  email             String?
+  telefono          String?
+  celular           String?
+  sitioWeb          String?
+
+  // Dirección fiscal
+  calle             String?
+  numeroExterior    String?
+  numeroInterior    String?
+  colonia           String?
+  codigoPostal      String?
+  ciudad            String?
+  estado            String?
+  pais              String   @default("México")
+
+  // Configuración comercial
+  diasCredito       Int      @default(0)
+  limiteCredito     Decimal? @db.Decimal(15, 2)
+  descuentoGeneral  Decimal? @db.Decimal(5, 2)
+
+  // Estado
+  activo            Boolean  @default(true)
+  notas             String?
+
+  // Auditoría
+  creadoEn          DateTime @default(now())
+  actualizadoEn     DateTime @updatedAt
+
+  // Relaciones
+  facturas          Factura[]
+  pagos             Pago[]
+
+  @@map("clientes")
+}
+
+// ============================================
+// PRODUCTOS Y SERVICIOS
+// ============================================
+
+model Producto {
+  id                String   @id @default(uuid())
+
+  // Identificación
+  clave             String   @unique
+  nombre            String
+  descripcion       String?
+  categoria         String?
+  unidadMedida      String   @default("PZA")
+
+  // SAT (México)
+  claveProdServ     String?  // Clave del SAT
+  claveUnidad       String?  // Clave unidad del SAT
+
+  // Tipo
+  tipo              TipoProducto @default(PRODUCTO)
+
+  // Precios
+  precio            Decimal  @db.Decimal(15, 2)
+  costo             Decimal? @db.Decimal(15, 2)
+
+  // Impuestos
+  iva               Decimal  @default(16) @db.Decimal(5, 2)
+  ieps              Decimal? @db.Decimal(5, 2)
+
+  // Inventario
+  controlaInventario Boolean @default(false)
+  stockActual       Decimal? @db.Decimal(15, 3)
+  stockMinimo       Decimal? @db.Decimal(15, 3)
+  stockMaximo       Decimal? @db.Decimal(15, 3)
+
+  // Estado
+  activo            Boolean  @default(true)
+
+  // Auditoría
+  creadoEn          DateTime @default(now())
+  actualizadoEn     DateTime @updatedAt
+
+  // Relaciones
+  lineasFactura     LineaFactura[]
+
+  @@map("productos")
+}
+
+enum TipoProducto {
+  PRODUCTO
+  SERVICIO
+}
+
+// ============================================
+// FACTURACIÓN
+// ============================================
+
+model Factura {
+  id                String   @id @default(uuid())
+
+  // Folio
+  serie             String   @default("A")
+  folio             Int
+  folioCompleto     String   @unique
+
+  // Cliente
+  clienteId         String
+  cliente           Cliente  @relation(fields: [clienteId], references: [id])
+
+  // Fechas
+  fecha             DateTime @default(now())
+  fechaVencimiento  DateTime?
+
+  // Montos
+  subtotal          Decimal  @db.Decimal(15, 2)
+  descuento         Decimal  @default(0) @db.Decimal(15, 2)
+  iva               Decimal  @db.Decimal(15, 2)
+  ieps              Decimal  @default(0) @db.Decimal(15, 2)
+  total             Decimal  @db.Decimal(15, 2)
+
+  // Estado
+  estado            EstadoFactura @default(BORRADOR)
+
+  // Pago
+  metodoPago        String?  // PUE, PPD
+  formaPago         String?  // 01, 02, 03, etc
+  condicionPago     String?
+
+  // CFDI (México)
+  uuid              String?  @unique
+  xmlPath           String?
+  pdfPath           String?
+  fechaTimbrado     DateTime?
+
+  // Notas
+  observaciones     String?
+
+  // Auditoría
+  usuarioId         String
+  usuario           Usuario  @relation("UsuarioCreador", fields: [usuarioId], references: [id])
+  creadoEn          DateTime @default(now())
+  actualizadoEn     DateTime @updatedAt
+
+  // Relaciones
+  lineas            LineaFactura[]
+  pagos             AplicacionPago[]
+
+  @@unique([serie, folio])
+  @@index([clienteId])
+  @@index([fecha])
+  @@index([estado])
+  @@map("facturas")
+}
+
+enum EstadoFactura {
+  BORRADOR
+  EMITIDA
+  TIMBRADA
+  PAGADA
+  PARCIALMENTE_PAGADA
+  VENCIDA
+  CANCELADA
+}
+
+model LineaFactura {
+  id                String   @id @default(uuid())
+
+  // Factura
+  facturaId         String
+  factura           Factura  @relation(fields: [facturaId], references: [id], onDelete: Cascade)
+
+  // Producto
+  productoId        String
+  producto          Producto @relation(fields: [productoId], references: [id])
+
+  // Detalles
+  cantidad          Decimal  @db.Decimal(15, 3)
+  precioUnitario    Decimal  @db.Decimal(15, 2)
+  descuento         Decimal  @default(0) @db.Decimal(15, 2)
+
+  // Impuestos
+  iva               Decimal  @db.Decimal(5, 2)
+  ieps              Decimal  @default(0) @db.Decimal(5, 2)
+
+  // Totales
+  subtotal          Decimal  @db.Decimal(15, 2)
+  total             Decimal  @db.Decimal(15, 2)
+
+  // Orden
+  orden             Int
+
+  @@index([facturaId])
+  @@map("lineas_factura")
+}
+
+// ============================================
+// PAGOS
+// ============================================
+
+model Pago {
+  id                String   @id @default(uuid())
+
+  // Cliente
+  clienteId         String
+  cliente           Cliente  @relation(fields: [clienteId], references: [id])
+
+  // Detalles
+  folio             String   @unique
+  fecha             DateTime @default(now())
+  monto             Decimal  @db.Decimal(15, 2)
+
+  // Forma de pago
+  formaPago         String   // Efectivo, Transferencia, Tarjeta, etc
+  referencia        String?
+
+  // Cuenta bancaria
+  banco             String?
+  cuentaBancaria    String?
+
+  // Estado
+  estado            EstadoPago @default(APLICADO)
+
+  // Notas
+  observaciones     String?
+
+  // Auditoría
+  creadoEn          DateTime @default(now())
+  actualizadoEn     DateTime @updatedAt
+
+  // Relaciones
+  aplicaciones      AplicacionPago[]
+
+  @@index([clienteId])
+  @@index([fecha])
+  @@map("pagos")
+}
+
+enum EstadoPago {
+  APLICADO
+  PENDIENTE
+  CANCELADO
+}
+
+model AplicacionPago {
+  id                String   @id @default(uuid())
+
+  // Pago
+  pagoId            String
+  pago              Pago     @relation(fields: [pagoId], references: [id], onDelete: Cascade)
+
+  // Factura
+  facturaId         String
+  factura           Factura  @relation(fields: [facturaId], references: [id])
+
+  // Monto aplicado
+  monto             Decimal  @db.Decimal(15, 2)
+
+  // Auditoría
+  creadoEn          DateTime @default(now())
+
+  @@index([pagoId])
+  @@index([facturaId])
+  @@map("aplicaciones_pago")
+}
+
+// ============================================
+// CONFIGURACIÓN
+// ============================================
+
+model Configuracion {
+  id                String   @id @default(uuid())
+  clave             String   @unique
+  valor             String
+  tipo              String   @default("string") // string, number, boolean, json
+  descripcion       String?
+
+  // Auditoría
+  creadoEn          DateTime @default(now())
+  actualizadoEn     DateTime @updatedAt
+
+  @@map("configuracion")
+}
+
+// ============================================
+// AUDITORÍA
+// ============================================
+
+model Auditoria {
+  id                String   @id @default(uuid())
+
+  // Usuario
+  usuarioId         String?
+  usuarioEmail      String?
+
+  // Acción
+  tabla             String
+  registroId        String
+  accion            AccionAuditoria
+
+  // Datos
+  datosAnteriores   Json?
+  datosNuevos       Json?
+
+  // Contexto
+  ipAddress         String?
+  userAgent         String?
+
+  // Auditoría
+  creadoEn          DateTime @default(now())
+
+  @@index([tabla, registroId])
+  @@index([usuarioId])
+  @@index([creadoEn])
+  @@map("auditoria")
+}
+
+enum AccionAuditoria {
+  CREAR
+  ACTUALIZAR
+  ELIMINAR
+  LOGIN
+  LOGOUT
+}

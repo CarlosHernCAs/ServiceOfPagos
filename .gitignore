@@ -1,0 +1,77 @@
+# Dependencias
+node_modules/
+.pnp
+.pnp.js
+
+# Testing
+coverage/
+*.lcov
+.nyc_output
+
+# Producción
+build/
+dist/
+*.tsbuildinfo
+
+# Entorno
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Sistema operativo
+Thumbs.db
+
+# Docker
+*.pid
+*.seed
+*.pid.lock
+
+# Base de datos
+*.sqlite
+*.sqlite-journal
+*.db
+
+# Prisma
+backend/prisma/migrations
+
+# Temporales
+tmp/
+temp/
+*.tmp
+
+# Backups
+*.bak
+*.backup
+
+# Archivos generados
+*.pdf
+*.xml
+uploads/
+
+# Cache
+.cache/
+.parcel-cache/
+.next/
+.nuxt/
+.vite/
