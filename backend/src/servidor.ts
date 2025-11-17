@@ -10,8 +10,9 @@ import { manejadorErrores, noEncontrado } from './middlewares/errorHandler';
 // Importar rutas
 import rutasAuth from './rutas/autenticacion';
 import rutasClientes from './rutas/clientes';
-// import rutasProductos from './rutas/productos';
-// import rutasFacturas from './rutas/facturas';
+import rutasProductos from './rutas/productos';
+import rutasConfiguracion from './rutas/configuracion';
+import rutasFacturas from './rutas/facturas';
 
 const app: Application = express();
 const PORT = env.PORT || 3000;
@@ -72,8 +73,9 @@ app.get('/api/salud', (req, res) => {
 // Rutas de la API
 app.use('/api/auth', rutasAuth);
 app.use('/api/clientes', rutasClientes);
-// app.use('/api/productos', rutasProductos);
-// app.use('/api/facturas', rutasFacturas);
+app.use('/api/productos', rutasProductos);
+app.use('/api/configuracion', rutasConfiguracion);
+app.use('/api/facturas', rutasFacturas);
 
 // ============================================
 // MANEJO DE ERRORES

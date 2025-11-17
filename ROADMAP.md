@@ -27,102 +27,112 @@
 
 ---
 
-## FASE 1: Fundación (Semanas 1-2) ✅ INICIANDO
+## FASE 1: Fundación (Semanas 1-2) ✅ COMPLETADA
 
 ### 1.1 Configuración Inicial
 - [x] Estructura de carpetas
-- [ ] Configuración de Git
-- [ ] Docker Compose (PostgreSQL + Redis)
-- [ ] Variables de entorno
+- [x] Configuración de Git
+- [x] Docker Compose (PostgreSQL + Redis)
+- [x] Variables de entorno
 
 ### 1.2 Backend Base
-- [ ] Inicializar proyecto Node.js
-- [ ] Express + middlewares básicos
-- [ ] Conexión a PostgreSQL con Prisma
-- [ ] Estructura de carpetas MVC
-- [ ] Logger con Winston
-- [ ] Manejo de errores centralizado
+- [x] Inicializar proyecto Node.js
+- [x] Express + middlewares básicos
+- [x] Conexión a PostgreSQL con Prisma
+- [x] Estructura de carpetas MVC
+- [x] Logger con Winston
+- [x] Manejo de errores centralizado
 
 ### 1.3 Frontend Base
-- [ ] Inicializar Vite + React + TypeScript
-- [ ] Configurar Tailwind CSS
-- [ ] Instalar shadcn/ui
-- [ ] Estructura de carpetas
-- [ ] Routing con React Router
-- [ ] Layout base
+- [x] Inicializar Vite + React + TypeScript
+- [x] Configurar Tailwind CSS
+- [x] Instalar shadcn/ui
+- [x] Estructura de carpetas
+- [x] Routing con React Router
+- [x] Layout base
 
 ### 1.4 Autenticación
-- [ ] Modelo de Usuario en Prisma
-- [ ] Registro de usuarios
-- [ ] Login con JWT
-- [ ] Middleware de autenticación
-- [ ] Context de autenticación en React
-- [ ] Rutas protegidas
+- [x] Modelo de Usuario en Prisma
+- [x] Registro de usuarios
+- [x] Login con JWT
+- [x] Middleware de autenticación
+- [x] Context de autenticación en React
+- [x] Rutas protegidas
 
 ---
 
-## FASE 2: Catálogos Base (Semanas 3-4)
+## FASE 2: Catálogos Base (Semanas 3-4) ✅ COMPLETADA
 
-### 2.1 Clientes
-- [ ] Modelo de datos
-- [ ] CRUD backend
-- [ ] Validaciones con Zod
-- [ ] Interfaz con shadcn/ui Table
-- [ ] Formulario de alta/edición
-- [ ] Búsqueda y filtros
+### 2.1 Clientes ✅ COMPLETADO
+- [x] Modelo de datos
+- [x] CRUD backend
+- [x] Validaciones con Zod
+- [x] Interfaz con shadcn/ui Table
+- [x] Formulario de alta/edición
+- [x] Búsqueda y filtros
 
-### 2.2 Productos/Servicios
-- [ ] Modelo de datos
-- [ ] CRUD backend
-- [ ] Categorías de productos
-- [ ] Unidades de medida
-- [ ] Interfaz de catálogo
+### 2.2 Productos/Servicios ✅ COMPLETADO
+- [x] Modelo de datos
+- [x] CRUD backend
+- [x] Categorías de productos
+- [x] Unidades de medida
+- [x] Interfaz de catálogo
+- [x] Búsqueda y filtros
 - [ ] Importación masiva (CSV)
 
-### 2.3 Configuración Fiscal
-- [ ] Regímenes fiscales
-- [ ] Métodos de pago
-- [ ] Formas de pago
-- [ ] Usos de CFDI
-- [ ] Tipos de impuestos
-- [ ] Configuración de empresa
+### 2.3 Configuración Fiscal ✅ COMPLETADO
+- [x] Regímenes fiscales (catálogo completo)
+- [x] Métodos de pago (catálogo completo)
+- [x] Formas de pago (catálogo completo)
+- [x] Usos de CFDI (catálogo completo)
+- [x] Tipos de impuestos (catálogo completo)
+- [x] Servicio de configuración
+- [ ] Configuración de empresa (UI)
 
 ---
 
-## FASE 3: Facturación Core (Semanas 5-8)
+## FASE 3: Facturación Core (Semanas 5-8) 🟡 EN PROGRESO
 
-### 3.1 Modelo de Factura
-- [ ] Esquema Prisma completo
-- [ ] Líneas de factura
-- [ ] Cálculo de impuestos
-- [ ] Numeración automática
-- [ ] Series de facturación
+### 3.1 Modelo de Factura ✅ COMPLETADO
+- [x] Esquema Prisma completo
+- [x] Líneas de factura
+- [x] Cálculo de impuestos (lógica backend)
+- [x] Numeración automática (lógica backend)
+- [x] Series de facturación (modelo y lógica)
 
-### 3.2 Generación de Facturas
-- [ ] Endpoint crear factura
-- [ ] Validaciones de negocio
-- [ ] Cálculo automático de totales
-- [ ] Estados de factura (borrador, emitida, pagada, cancelada)
-- [ ] Formulario React paso a paso
-- [ ] Vista previa en tiempo real
+### 3.2 Generación de Facturas ✅ COMPLETADO
+- [x] Endpoint crear factura
+- [x] Validaciones de negocio
+- [x] Cálculo automático de totales
+- [x] Estados de factura (enum en schema)
+- [x] Formulario React completo
+- [x] Selector de cliente con búsqueda
+- [x] Selector de productos con búsqueda
+- [x] Tabla editable de líneas de factura
+- [x] Cálculos en tiempo real (subtotal, IVA, IEPS, total)
+- [x] Control de inventario al facturar
+- [ ] Vista previa completa antes de crear
 
-### 3.3 Visualización y PDF
+### 3.3 Visualización y PDF 🔄 INICIANDO
 - [ ] Generación de PDF con pdfkit
 - [ ] Template de factura personalizable
 - [ ] Descarga de PDF
 - [ ] Envío por email
-- [ ] Listado de facturas con filtros
-- [ ] Dashboard de facturas
+- [x] Listado de facturas con filtros
+- [x] Búsqueda por folio, cliente, RFC
+- [x] Paginación de resultados
+- [x] Visualización de estados con colores
+- [ ] Dashboard de facturas con métricas
 
 ---
 
-## FASE 4: Pagos (Semanas 9-10)
+## FASE 4: Pagos (Semanas 9-10) ⏸️ MODELOS LISTOS
 
-### 4.1 Registro de Pagos
-- [ ] Modelo de pagos
-- [ ] Aplicación de pagos a facturas
-- [ ] Pagos parciales
-- [ ] Saldo a favor
+### 4.1 Registro de Pagos ⏸️ PARCIAL
+- [x] Modelo de pagos (schema Prisma)
+- [x] Aplicación de pagos a facturas (modelo AplicacionPago)
+- [ ] Pagos parciales (implementación backend)
+- [ ] Saldo a favor (lógica)
 - [ ] Estado de cuenta por cliente
 
 ### 4.2 Pasarelas de Pago
