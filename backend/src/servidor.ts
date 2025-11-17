@@ -7,8 +7,8 @@ import { logger } from './configuracion/logger';
 import { conectarBaseDatos, desconectarBaseDatos } from './configuracion/baseDatos';
 import { manejadorErrores, noEncontrado } from './middlewares/errorHandler';
 
-// Importar rutas (las crearemos después)
-// import rutasAuth from './rutas/auth';
+// Importar rutas
+import rutasAuth from './rutas/autenticacion';
 // import rutasClientes from './rutas/clientes';
 // import rutasProductos from './rutas/productos';
 // import rutasFacturas from './rutas/facturas';
@@ -69,8 +69,8 @@ app.get('/api/salud', (req, res) => {
   });
 });
 
-// Rutas de la API (las habilitaremos cuando las creemos)
-// app.use('/api/auth', rutasAuth);
+// Rutas de la API
+app.use('/api/auth', rutasAuth);
 // app.use('/api/clientes', rutasClientes);
 // app.use('/api/productos', rutasProductos);
 // app.use('/api/facturas', rutasFacturas);
