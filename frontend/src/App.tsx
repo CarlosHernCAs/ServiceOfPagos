@@ -4,6 +4,7 @@ import RutaProtegida from '@/componentes/comunes/RutaProtegida';
 import Login from '@/paginas/Login';
 import Registro from '@/paginas/Registro';
 import Dashboard from '@/paginas/Dashboard';
+import Clientes from '@/paginas/Clientes';
 
 function App() {
   return (
@@ -23,6 +24,14 @@ function App() {
             element={
               <RutaProtegida>
                 <Dashboard />
+              </RutaProtegida>
+            }
+          />
+          <Route
+            path="/clientes"
+            element={
+              <RutaProtegida>
+                <Clientes />
               </RutaProtegida>
             }
           />

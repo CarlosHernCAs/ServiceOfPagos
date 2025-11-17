@@ -135,33 +135,45 @@ export default function Dashboard() {
 
         {/* Acciones Rápidas */}
         <div className="mt-8">
-          <h3 className="text-xl font-semibold mb-4">Próximas Funcionalidades</h3>
+          <h3 className="text-xl font-semibold mb-4">Módulos Disponibles</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Card className="cursor-not-allowed opacity-60">
+            <Card
+              className="cursor-pointer hover:shadow-lg transition-shadow"
+              onClick={() => navigate('/clientes')}
+            >
               <CardHeader>
-                <CardTitle className="text-lg">Clientes</CardTitle>
+                <CardTitle className="text-lg">Clientes ✅</CardTitle>
                 <CardDescription>
                   Gestiona tus clientes
                 </CardDescription>
               </CardHeader>
+              <CardContent>
+                <Button className="w-full">Ir a Clientes</Button>
+              </CardContent>
             </Card>
 
             <Card className="cursor-not-allowed opacity-60">
               <CardHeader>
-                <CardTitle className="text-lg">Productos</CardTitle>
+                <CardTitle className="text-lg">Productos 🔜</CardTitle>
                 <CardDescription>
                   Administra tu catálogo
                 </CardDescription>
               </CardHeader>
+              <CardContent>
+                <p className="text-xs text-gray-500">Próximamente</p>
+              </CardContent>
             </Card>
 
             <Card className="cursor-not-allowed opacity-60">
               <CardHeader>
-                <CardTitle className="text-lg">Facturas</CardTitle>
+                <CardTitle className="text-lg">Facturas 🔜</CardTitle>
                 <CardDescription>
                   Crea y gestiona facturas
                 </CardDescription>
               </CardHeader>
+              <CardContent>
+                <p className="text-xs text-gray-500">Próximamente</p>
+              </CardContent>
             </Card>
           </div>
         </div>
