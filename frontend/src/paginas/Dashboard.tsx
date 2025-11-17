@@ -167,15 +167,18 @@ export default function Dashboard() {
               </CardContent>
             </Card>
 
-            <Card className="cursor-not-allowed opacity-60">
+            <Card
+              className="cursor-pointer hover:shadow-lg transition-shadow"
+              onClick={() => navigate('/facturas')}
+            >
               <CardHeader>
-                <CardTitle className="text-lg">Facturas 🔜</CardTitle>
+                <CardTitle className="text-lg">Facturas ✅</CardTitle>
                 <CardDescription>
                   Crea y gestiona facturas
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <p className="text-xs text-gray-500">Próximamente</p>
+                <Button className="w-full">Ir a Facturas</Button>
               </CardContent>
             </Card>
           </div>

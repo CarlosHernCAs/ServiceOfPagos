@@ -6,6 +6,7 @@ import Registro from '@/paginas/Registro';
 import Dashboard from '@/paginas/Dashboard';
 import Clientes from '@/paginas/Clientes';
 import Productos from '@/paginas/Productos';
+import Facturas from '@/paginas/Facturas';
 
 function App() {
   return (
@@ -41,6 +42,14 @@ function App() {
             element={
               <RutaProtegida>
                 <Productos />
+              </RutaProtegida>
+            }
+          />
+          <Route
+            path="/facturas"
+            element={
+              <RutaProtegida>
+                <Facturas />
               </RutaProtegida>
             }
           />
