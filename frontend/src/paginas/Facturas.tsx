@@ -6,7 +6,8 @@ import { Button } from '@/componentes/ui/button';
 import { Input } from '@/componentes/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/componentes/ui/card';
 import { Plus, Search, ArrowLeft, FileText, Eye } from 'lucide-react';
-import type { Factura, FiltrosFactura } from '@/tipos/facturas';
+import FormularioFactura from '@/componentes/facturas/FormularioFactura';
+import type { Factura, FiltrosFactura, CrearFacturaInput } from '@/tipos/facturas';
 
 export default function Facturas() {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ export default function Facturas() {
   const [facturas, setFacturas] = useState<Factura[]>([]);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState('');
+  const [modoFormulario, setModoFormulario] = useState(false);
   const [busqueda, setBusqueda] = useState('');
   const [paginacion, setPaginacion] = useState({
     total: 0,
@@ -45,11 +47,33 @@ export default function Facturas() {
   };
 
   useEffect(() => {
-    cargarFacturas();
-  }, [paginacion.pagina, busqueda]);
+    if (!modoFormulario) {
+      cargarFacturas();
+    }
+  }, [paginacion.pagina, busqueda, modoFormulario]);
+
+  const manejarCrear = async (datos: CrearFacturaInput) => {
+    try {
+      setCargando(true);
+      await servicioFacturas.crear(datos);
+      setModoFormulario(false);
+      alert('Factura creada exitosamente');
+      cargarFacturas();
+    } catch (err: any) {
+      alert(err.response?.data?.error || 'Error al crear factura');
+    } finally {
+      setCargando(false);
+    }
+  };
 
   const manejarVer = (factura: Factura) => {
-    alert(`Ver detalles de factura: ${factura.folioCompleto}\nTotal: ${formatearMoneda(factura.total)}`);
+    alert(
+      `Factura: ${factura.folioCompleto}\n` +
+      `Cliente: ${factura.cliente?.razonSocial}\n` +
+      `Total: ${formatearMoneda(factura.total)}\n` +
+      `Estado: ${factura.estado}\n\n` +
+      `Productos: ${factura.lineas.length} líneas`
+    );
   };
 
   const manejarLogout = () => {
@@ -85,9 +109,43 @@ export default function Facturas() {
     return colores[estado] || 'bg-gray-100 text-gray-800';
   };
 
+  // Modo formulario
+  if (modoFormulario) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <header className="bg-white shadow">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <div className="flex items-center gap-4">
+              <Button variant="ghost" onClick={() => setModoFormulario(false)}>
+                <ArrowLeft className="h-5 w-5" />
+              </Button>
+              <h1 className="text-2xl font-bold text-gray-900">Nueva Factura</h1>
+            </div>
+            <div className="flex items-center gap-4">
+              <span className="text-sm text-gray-600">
+                {usuario?.nombre} {usuario?.apellido}
+              </span>
+              <Button variant="outline" onClick={manejarLogout}>
+                Cerrar Sesión
+              </Button>
+            </div>
+          </div>
+        </header>
+
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <FormularioFactura
+            onSubmit={manejarCrear}
+            onCancelar={() => setModoFormulario(false)}
+            cargando={cargando}
+          />
+        </main>
+      </div>
+    );
+  }
+
+  // Modo lista
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
       <header className="bg-white shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <div className="flex items-center gap-4">
@@ -108,13 +166,12 @@ export default function Facturas() {
         </div>
       </header>
 
-      {/* Main */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Card>
           <CardHeader>
             <div className="flex justify-between items-center">
               <CardTitle>Gestión de Facturas</CardTitle>
-              <Button onClick={() => alert('Formulario de factura próximamente')}>
+              <Button onClick={() => setModoFormulario(true)}>
                 <Plus className="h-4 w-4 mr-2" />
                 Nueva Factura
               </Button>

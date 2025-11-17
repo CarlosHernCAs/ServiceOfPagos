@@ -61,7 +61,7 @@
 
 ---
 
-## FASE 2: Catálogos Base (Semanas 3-4) 🟡 EN PROGRESO
+## FASE 2: Catálogos Base (Semanas 3-4) ✅ COMPLETADA
 
 ### 2.1 Clientes ✅ COMPLETADO
 - [x] Modelo de datos
@@ -71,48 +71,58 @@
 - [x] Formulario de alta/edición
 - [x] Búsqueda y filtros
 
-### 2.2 Productos/Servicios 🔄 INICIANDO
+### 2.2 Productos/Servicios ✅ COMPLETADO
 - [x] Modelo de datos
-- [ ] CRUD backend
-- [ ] Categorías de productos
-- [ ] Unidades de medida
-- [ ] Interfaz de catálogo
+- [x] CRUD backend
+- [x] Categorías de productos
+- [x] Unidades de medida
+- [x] Interfaz de catálogo
+- [x] Búsqueda y filtros
 - [ ] Importación masiva (CSV)
 
-### 2.3 Configuración Fiscal ⏸️ PARCIAL
-- [ ] Regímenes fiscales (catálogo completo)
-- [ ] Métodos de pago (catálogo completo)
-- [ ] Formas de pago (catálogo completo)
-- [ ] Usos de CFDI (catálogo completo)
-- [ ] Tipos de impuestos (catálogo completo)
-- [ ] Configuración de empresa
+### 2.3 Configuración Fiscal ✅ COMPLETADO
+- [x] Regímenes fiscales (catálogo completo)
+- [x] Métodos de pago (catálogo completo)
+- [x] Formas de pago (catálogo completo)
+- [x] Usos de CFDI (catálogo completo)
+- [x] Tipos de impuestos (catálogo completo)
+- [x] Servicio de configuración
+- [ ] Configuración de empresa (UI)
 
 ---
 
-## FASE 3: Facturación Core (Semanas 5-8) ⏸️ MODELOS LISTOS
+## FASE 3: Facturación Core (Semanas 5-8) 🟡 EN PROGRESO
 
 ### 3.1 Modelo de Factura ✅ COMPLETADO
 - [x] Esquema Prisma completo
 - [x] Líneas de factura
-- [ ] Cálculo de impuestos (lógica backend)
-- [ ] Numeración automática (lógica backend)
-- [ ] Series de facturación (gestión UI)
+- [x] Cálculo de impuestos (lógica backend)
+- [x] Numeración automática (lógica backend)
+- [x] Series de facturación (modelo y lógica)
 
-### 3.2 Generación de Facturas ❌ PENDIENTE
-- [ ] Endpoint crear factura
-- [ ] Validaciones de negocio
-- [ ] Cálculo automático de totales
+### 3.2 Generación de Facturas ✅ COMPLETADO
+- [x] Endpoint crear factura
+- [x] Validaciones de negocio
+- [x] Cálculo automático de totales
 - [x] Estados de factura (enum en schema)
-- [ ] Formulario React paso a paso
-- [ ] Vista previa en tiempo real
+- [x] Formulario React completo
+- [x] Selector de cliente con búsqueda
+- [x] Selector de productos con búsqueda
+- [x] Tabla editable de líneas de factura
+- [x] Cálculos en tiempo real (subtotal, IVA, IEPS, total)
+- [x] Control de inventario al facturar
+- [ ] Vista previa completa antes de crear
 
-### 3.3 Visualización y PDF ❌ PENDIENTE
+### 3.3 Visualización y PDF 🔄 INICIANDO
 - [ ] Generación de PDF con pdfkit
 - [ ] Template de factura personalizable
 - [ ] Descarga de PDF
 - [ ] Envío por email
-- [ ] Listado de facturas con filtros
-- [ ] Dashboard de facturas
+- [x] Listado de facturas con filtros
+- [x] Búsqueda por folio, cliente, RFC
+- [x] Paginación de resultados
+- [x] Visualización de estados con colores
+- [ ] Dashboard de facturas con métricas
 
 ---
 
