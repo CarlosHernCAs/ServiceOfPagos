@@ -113,15 +113,17 @@
 - [x] Control de inventario al facturar
 - [ ] Vista previa completa antes de crear
 
-### 3.3 Visualización y PDF 🔄 INICIANDO
-- [ ] Generación de PDF con pdfkit
-- [ ] Template de factura personalizable
-- [ ] Descarga de PDF
-- [ ] Envío por email
+### 3.3 Visualización y PDF 🟡 EN PROGRESO
+- [x] Generación de PDF con pdfkit
+- [x] Template de factura profesional con diseño completo
+- [x] Descarga de PDF desde frontend
+- [x] Endpoint protegido para generar PDF
+- [ ] Envío por email (opcional)
 - [x] Listado de facturas con filtros
 - [x] Búsqueda por folio, cliente, RFC
 - [x] Paginación de resultados
 - [x] Visualización de estados con colores
+- [x] Botón de descarga PDF en tabla
 - [ ] Dashboard de facturas con métricas
 
 ---
