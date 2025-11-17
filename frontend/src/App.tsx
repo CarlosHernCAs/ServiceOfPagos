@@ -5,6 +5,7 @@ import Login from '@/paginas/Login';
 import Registro from '@/paginas/Registro';
 import Dashboard from '@/paginas/Dashboard';
 import Clientes from '@/paginas/Clientes';
+import Productos from '@/paginas/Productos';
 
 function App() {
   return (
@@ -32,6 +33,14 @@ function App() {
             element={
               <RutaProtegida>
                 <Clientes />
+              </RutaProtegida>
+            }
+          />
+          <Route
+            path="/productos"
+            element={
+              <RutaProtegida>
+                <Productos />
               </RutaProtegida>
             }
           />

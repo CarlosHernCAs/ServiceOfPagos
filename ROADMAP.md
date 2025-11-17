@@ -27,86 +27,86 @@
 
 ---
 
-## FASE 1: Fundación (Semanas 1-2) ✅ INICIANDO
+## FASE 1: Fundación (Semanas 1-2) ✅ COMPLETADA
 
 ### 1.1 Configuración Inicial
 - [x] Estructura de carpetas
-- [ ] Configuración de Git
-- [ ] Docker Compose (PostgreSQL + Redis)
-- [ ] Variables de entorno
+- [x] Configuración de Git
+- [x] Docker Compose (PostgreSQL + Redis)
+- [x] Variables de entorno
 
 ### 1.2 Backend Base
-- [ ] Inicializar proyecto Node.js
-- [ ] Express + middlewares básicos
-- [ ] Conexión a PostgreSQL con Prisma
-- [ ] Estructura de carpetas MVC
-- [ ] Logger con Winston
-- [ ] Manejo de errores centralizado
+- [x] Inicializar proyecto Node.js
+- [x] Express + middlewares básicos
+- [x] Conexión a PostgreSQL con Prisma
+- [x] Estructura de carpetas MVC
+- [x] Logger con Winston
+- [x] Manejo de errores centralizado
 
 ### 1.3 Frontend Base
-- [ ] Inicializar Vite + React + TypeScript
-- [ ] Configurar Tailwind CSS
-- [ ] Instalar shadcn/ui
-- [ ] Estructura de carpetas
-- [ ] Routing con React Router
-- [ ] Layout base
+- [x] Inicializar Vite + React + TypeScript
+- [x] Configurar Tailwind CSS
+- [x] Instalar shadcn/ui
+- [x] Estructura de carpetas
+- [x] Routing con React Router
+- [x] Layout base
 
 ### 1.4 Autenticación
-- [ ] Modelo de Usuario en Prisma
-- [ ] Registro de usuarios
-- [ ] Login con JWT
-- [ ] Middleware de autenticación
-- [ ] Context de autenticación en React
-- [ ] Rutas protegidas
+- [x] Modelo de Usuario en Prisma
+- [x] Registro de usuarios
+- [x] Login con JWT
+- [x] Middleware de autenticación
+- [x] Context de autenticación en React
+- [x] Rutas protegidas
 
 ---
 
-## FASE 2: Catálogos Base (Semanas 3-4)
+## FASE 2: Catálogos Base (Semanas 3-4) 🟡 EN PROGRESO
 
-### 2.1 Clientes
-- [ ] Modelo de datos
-- [ ] CRUD backend
-- [ ] Validaciones con Zod
-- [ ] Interfaz con shadcn/ui Table
-- [ ] Formulario de alta/edición
-- [ ] Búsqueda y filtros
+### 2.1 Clientes ✅ COMPLETADO
+- [x] Modelo de datos
+- [x] CRUD backend
+- [x] Validaciones con Zod
+- [x] Interfaz con shadcn/ui Table
+- [x] Formulario de alta/edición
+- [x] Búsqueda y filtros
 
-### 2.2 Productos/Servicios
-- [ ] Modelo de datos
+### 2.2 Productos/Servicios 🔄 INICIANDO
+- [x] Modelo de datos
 - [ ] CRUD backend
 - [ ] Categorías de productos
 - [ ] Unidades de medida
 - [ ] Interfaz de catálogo
 - [ ] Importación masiva (CSV)
 
-### 2.3 Configuración Fiscal
-- [ ] Regímenes fiscales
-- [ ] Métodos de pago
-- [ ] Formas de pago
-- [ ] Usos de CFDI
-- [ ] Tipos de impuestos
+### 2.3 Configuración Fiscal ⏸️ PARCIAL
+- [ ] Regímenes fiscales (catálogo completo)
+- [ ] Métodos de pago (catálogo completo)
+- [ ] Formas de pago (catálogo completo)
+- [ ] Usos de CFDI (catálogo completo)
+- [ ] Tipos de impuestos (catálogo completo)
 - [ ] Configuración de empresa
 
 ---
 
-## FASE 3: Facturación Core (Semanas 5-8)
+## FASE 3: Facturación Core (Semanas 5-8) ⏸️ MODELOS LISTOS
 
-### 3.1 Modelo de Factura
-- [ ] Esquema Prisma completo
-- [ ] Líneas de factura
-- [ ] Cálculo de impuestos
-- [ ] Numeración automática
-- [ ] Series de facturación
+### 3.1 Modelo de Factura ✅ COMPLETADO
+- [x] Esquema Prisma completo
+- [x] Líneas de factura
+- [ ] Cálculo de impuestos (lógica backend)
+- [ ] Numeración automática (lógica backend)
+- [ ] Series de facturación (gestión UI)
 
-### 3.2 Generación de Facturas
+### 3.2 Generación de Facturas ❌ PENDIENTE
 - [ ] Endpoint crear factura
 - [ ] Validaciones de negocio
 - [ ] Cálculo automático de totales
-- [ ] Estados de factura (borrador, emitida, pagada, cancelada)
+- [x] Estados de factura (enum en schema)
 - [ ] Formulario React paso a paso
 - [ ] Vista previa en tiempo real
 
-### 3.3 Visualización y PDF
+### 3.3 Visualización y PDF ❌ PENDIENTE
 - [ ] Generación de PDF con pdfkit
 - [ ] Template de factura personalizable
 - [ ] Descarga de PDF
@@ -116,13 +116,13 @@
 
 ---
 
-## FASE 4: Pagos (Semanas 9-10)
+## FASE 4: Pagos (Semanas 9-10) ⏸️ MODELOS LISTOS
 
-### 4.1 Registro de Pagos
-- [ ] Modelo de pagos
-- [ ] Aplicación de pagos a facturas
-- [ ] Pagos parciales
-- [ ] Saldo a favor
+### 4.1 Registro de Pagos ⏸️ PARCIAL
+- [x] Modelo de pagos (schema Prisma)
+- [x] Aplicación de pagos a facturas (modelo AplicacionPago)
+- [ ] Pagos parciales (implementación backend)
+- [ ] Saldo a favor (lógica)
 - [ ] Estado de cuenta por cliente
 
 ### 4.2 Pasarelas de Pago

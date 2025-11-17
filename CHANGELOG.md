@@ -8,6 +8,8 @@ Registro de todos los cambios importantes del proyecto.
 
 ### ✨ Nuevo - Sistema de Autenticación Completo
 
+**NOTA:** Esta versión también incluye el CRUD completo de Clientes (ver detalles al final).
+
 #### Backend
 - **Validaciones con Zod**
   - Schema de registro con validación de email, password, nombre
@@ -95,6 +97,79 @@ Registro de todos los cambios importantes del proyecto.
 - CORS configurado
 - Helmet para headers seguros
 - Sanitización automática de Zod
+
+### ✨ Nuevo - CRUD Completo de Clientes
+
+#### Backend
+- **Modelo de Datos (Prisma)**
+  - Datos fiscales completos (RFC, razón social, régimen fiscal, uso CFDI)
+  - Contacto (email, teléfono, celular, sitio web)
+  - Dirección fiscal completa (calle, números, colonia, CP, ciudad, estado)
+  - Configuración comercial (días de crédito, límite de crédito, descuento general)
+  - Soft delete (campo activo)
+  - Relaciones con facturas y pagos
+
+- **Validaciones con Zod**
+  - Schema de creación con validación de RFC (formato México)
+  - Schema de actualización
+  - Schema de filtros con búsqueda por: razón social, RFC, email
+  - Validación de régimen fiscal y uso CFDI
+
+- **Servicio de Clientes**
+  - `crear()` - Crear cliente con validación de RFC único
+  - `obtenerTodos()` - Listar con paginación y filtros
+  - `obtenerPorId()` - Obtener cliente específico
+  - `actualizar()` - Actualizar datos
+  - `eliminar()` - Soft delete
+  - Búsqueda por múltiples criterios
+  - Estadísticas por cliente (facturas, pagos, vencidas)
+
+- **Controladores**
+  - `POST /api/clientes` - Crear cliente
+  - `GET /api/clientes` - Listar con paginación
+  - `GET /api/clientes/:id` - Obtener uno
+  - `PUT /api/clientes/:id` - Actualizar
+  - `DELETE /api/clientes/:id` - Eliminar (soft delete)
+  - Todos los endpoints protegidos con JWT
+
+#### Frontend
+- **Tipos TypeScript**
+  - Interfaces para Cliente, CrearCliente, ActualizarCliente
+  - Tipos para filtros y paginación
+  - Enums para régimen fiscal
+
+- **Servicios API**
+  - Servicio completo con Axios
+  - Métodos para todas las operaciones CRUD
+  - Manejo de errores
+
+- **Componentes**
+  - `TablaClientes.tsx` - Tabla con TanStack Table
+    - Columnas: RFC, Razón Social, Email, Teléfono, Régimen Fiscal, Estado
+    - Acciones: Ver, Editar, Eliminar
+    - Búsqueda en tiempo real
+    - Paginación
+  - `FormularioCliente.tsx` - Formulario de alta/edición
+    - React Hook Form + Zod
+    - Validación en tiempo real
+    - Campos agrupados por sección (Datos Fiscales, Contacto, Dirección, Comercial)
+
+- **Páginas**
+  - `Clientes.tsx` - Página principal de gestión
+    - Modal de creación/edición
+    - Confirmación de eliminación
+    - Indicadores de carga
+    - Manejo de errores con toast/alert
+
+#### Características
+- ✅ CRUD completo funcional
+- ✅ Validación de RFC formato México
+- ✅ Búsqueda y filtros avanzados
+- ✅ Paginación eficiente
+- ✅ Soft delete (desactivación)
+- ✅ Responsive design
+- ✅ Manejo de errores robusto
+- ✅ Integrado con sistema de autenticación
 
 ---
 
