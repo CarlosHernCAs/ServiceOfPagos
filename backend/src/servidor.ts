@@ -13,6 +13,7 @@ import rutasClientes from './rutas/clientes';
 import rutasProductos from './rutas/productos';
 import rutasConfiguracion from './rutas/configuracion';
 import rutasFacturas from './rutas/facturas';
+import rutasPagos from './rutas/pagos';
 
 const app: Application = express();
 const PORT = env.PORT || 3000;
@@ -76,6 +77,7 @@ app.use('/api/clientes', rutasClientes);
 app.use('/api/productos', rutasProductos);
 app.use('/api/configuracion', rutasConfiguracion);
 app.use('/api/facturas', rutasFacturas);
+app.use('/api/pagos', rutasPagos);
 
 // ============================================
 // MANEJO DE ERRORES
