@@ -79,4 +79,32 @@ export const servicioFacturas = {
     );
     return data.estadisticas;
   },
+
+  // Descargar PDF
+  async descargarPDF(id: string): Promise<void> {
+    const token = localStorage.getItem('accessToken');
+    const response = await fetch(`/api/facturas/${id}/pdf`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Error al descargar el PDF');
+    }
+
+    // Obtener el blob del PDF
+    const blob = await response.blob();
+
+    // Crear URL temporal y descargar
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Factura-${id}.pdf`;
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+  },
 };

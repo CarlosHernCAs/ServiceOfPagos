@@ -13,13 +13,16 @@ router.get('/estadisticas/general', ControladorFacturas.obtenerEstadisticas);
 // CRUD básico
 router.post('/', ControladorFacturas.crear);
 router.get('/', ControladorFacturas.obtenerTodos);
+
+// Rutas con acciones específicas (antes de /:id genérico)
+router.get('/:id/pdf', ControladorFacturas.descargarPDF);
+router.patch('/:id/estado', ControladorFacturas.cambiarEstado);
+router.post('/:id/cancelar', ControladorFacturas.cancelar);
+
+// Rutas CRUD genéricas
 router.get('/:id', ControladorFacturas.obtenerPorId);
 router.put('/:id', ControladorFacturas.actualizar);
 router.delete('/:id', ControladorFacturas.eliminar);
-
-// Rutas adicionales
-router.patch('/:id/estado', ControladorFacturas.cambiarEstado);
-router.post('/:id/cancelar', ControladorFacturas.cancelar);
 
 // Buscar por folio (al final para no conflictuar con :id)
 router.get('/folio/:folioCompleto', ControladorFacturas.obtenerPorFolio);

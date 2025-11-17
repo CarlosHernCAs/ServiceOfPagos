@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { ServicioFacturas } from '../servicios/facturas';
+import { ServicioPDF } from '../servicios/pdf';
 import {
   esquemaCrearFactura,
   esquemaActualizarFactura,
@@ -127,6 +128,18 @@ export class ControladorFacturas {
       const estadisticas = await ServicioFacturas.obtenerEstadisticas();
 
       res.status(200).json({ estadisticas });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  // GET /api/facturas/:id/pdf
+  static async descargarPDF(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
+
+      // Generar y enviar el PDF
+      await ServicioPDF.generarFacturaPDF(id, res);
     } catch (error) {
       next(error);
     }

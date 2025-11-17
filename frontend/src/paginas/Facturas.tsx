@@ -5,7 +5,7 @@ import { useAutenticacion } from '@/contextos/ContextoAutenticacion';
 import { Button } from '@/componentes/ui/button';
 import { Input } from '@/componentes/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/componentes/ui/card';
-import { Plus, Search, ArrowLeft, FileText, Eye } from 'lucide-react';
+import { Plus, Search, ArrowLeft, FileText, Eye, Download } from 'lucide-react';
 import FormularioFactura from '@/componentes/facturas/FormularioFactura';
 import type { Factura, FiltrosFactura, CrearFacturaInput } from '@/tipos/facturas';
 
@@ -74,6 +74,14 @@ export default function Facturas() {
       `Estado: ${factura.estado}\n\n` +
       `Productos: ${factura.lineas.length} líneas`
     );
+  };
+
+  const manejarDescargarPDF = async (facturaId: string) => {
+    try {
+      await servicioFacturas.descargarPDF(facturaId);
+    } catch (err: any) {
+      alert(err.message || 'Error al descargar el PDF');
+    }
   };
 
   const manejarLogout = () => {
@@ -244,8 +252,17 @@ export default function Facturas() {
                             size="sm"
                             variant="outline"
                             onClick={() => manejarVer(factura)}
+                            title="Ver detalles"
                           >
                             <Eye className="h-4 w-4" />
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => manejarDescargarPDF(factura.id)}
+                            title="Descargar PDF"
+                          >
+                            <Download className="h-4 w-4" />
                           </Button>
                         </td>
                       </tr>
