@@ -91,7 +91,7 @@
 
 ---
 
-## FASE 3: Facturación Core (Semanas 5-8) 🟡 EN PROGRESO
+## FASE 3: Facturación Core (Semanas 5-8) ✅ COMPLETADA
 
 ### 3.1 Modelo de Factura ✅ COMPLETADO
 - [x] Esquema Prisma completo
@@ -113,29 +113,41 @@
 - [x] Control de inventario al facturar
 - [ ] Vista previa completa antes de crear
 
-### 3.3 Visualización y PDF 🟡 EN PROGRESO
+### 3.3 Visualización y PDF ✅ COMPLETADA
 - [x] Generación de PDF con pdfkit
 - [x] Template de factura profesional con diseño completo
 - [x] Descarga de PDF desde frontend
 - [x] Endpoint protegido para generar PDF
-- [ ] Envío por email (opcional)
 - [x] Listado de facturas con filtros
 - [x] Búsqueda por folio, cliente, RFC
 - [x] Paginación de resultados
 - [x] Visualización de estados con colores
 - [x] Botón de descarga PDF en tabla
-- [ ] Dashboard de facturas con métricas
+- [x] Dashboard de facturas con KPIs y métricas
+- [x] Gráficas con Recharts (pie, barras, líneas)
+- [x] Estadísticas mensuales y por período
+- [x] Resumen por estado con porcentajes
+- [ ] Envío por email (opcional - futuro)
 
 ---
 
-## FASE 4: Pagos (Semanas 9-10) ⏸️ MODELOS LISTOS
+## FASE 4: Pagos (Semanas 9-10) 🟡 EN PROGRESO
 
-### 4.1 Registro de Pagos ⏸️ PARCIAL
+### 4.1 Registro de Pagos ✅ COMPLETADA (Backend)
 - [x] Modelo de pagos (schema Prisma)
 - [x] Aplicación de pagos a facturas (modelo AplicacionPago)
-- [ ] Pagos parciales (implementación backend)
-- [ ] Saldo a favor (lógica)
-- [ ] Estado de cuenta por cliente
+- [x] Validaciones con Zod
+- [x] Servicio completo de pagos (backend)
+- [x] Folio automático secuencial
+- [x] Crear pago con aplicaciones a facturas
+- [x] Aplicar pago existente a factura
+- [x] Pagos parciales (implementación backend)
+- [x] Actualización automática de estados de facturas
+- [x] Cancelación de pagos con reversión
+- [x] Estado de cuenta por cliente (backend)
+- [x] Controlador y rutas REST
+- [ ] Interfaz de registro de pagos (frontend)
+- [ ] Estado de cuenta por cliente (frontend)
 
 ### 4.2 Pasarelas de Pago
 - [ ] Integración con Stripe
