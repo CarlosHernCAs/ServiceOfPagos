@@ -7,6 +7,7 @@ import Dashboard from '@/paginas/Dashboard';
 import Clientes from '@/paginas/Clientes';
 import Productos from '@/paginas/Productos';
 import Facturas from '@/paginas/Facturas';
+import DashboardFacturas from '@/paginas/DashboardFacturas';
 
 function App() {
   return (
@@ -50,6 +51,14 @@ function App() {
             element={
               <RutaProtegida>
                 <Facturas />
+              </RutaProtegida>
+            }
+          />
+          <Route
+            path="/facturas/dashboard"
+            element={
+              <RutaProtegida>
+                <DashboardFacturas />
               </RutaProtegida>
             }
           />

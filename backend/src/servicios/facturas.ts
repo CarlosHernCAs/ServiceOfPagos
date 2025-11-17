@@ -485,6 +485,14 @@ export class ServicioFacturas {
   // ============================================
 
   static async obtenerEstadisticas() {
+    // Fecha actual y hace 30 días
+    const hoy = new Date();
+    const hace30Dias = new Date();
+    hace30Dias.setDate(hace30Dias.getDate() - 30);
+
+    // Inicio del mes actual
+    const inicioMes = new Date(hoy.getFullYear(), hoy.getMonth(), 1);
+
     const [
       totalFacturas,
       totalBorradores,
@@ -492,8 +500,12 @@ export class ServicioFacturas {
       totalTimbradas,
       totalPagadas,
       totalVencidas,
+      totalCanceladas,
       montoTotal,
       montoPagado,
+      facturasDelMes,
+      montosDelMes,
+      facturasUltimos30Dias,
     ] = await Promise.all([
       prisma.factura.count(),
       prisma.factura.count({ where: { estado: 'BORRADOR' } }),
@@ -501,6 +513,7 @@ export class ServicioFacturas {
       prisma.factura.count({ where: { estado: 'TIMBRADA' } }),
       prisma.factura.count({ where: { estado: 'PAGADA' } }),
       prisma.factura.count({ where: { estado: 'VENCIDA' } }),
+      prisma.factura.count({ where: { estado: 'CANCELADA' } }),
       prisma.factura.aggregate({
         _sum: { total: true },
         where: { estado: { notIn: ['BORRADOR', 'CANCELADA'] } },
@@ -509,7 +522,31 @@ export class ServicioFacturas {
         _sum: { total: true },
         where: { estado: 'PAGADA' },
       }),
+      prisma.factura.count({
+        where: {
+          fecha: { gte: inicioMes },
+          estado: { notIn: ['BORRADOR', 'CANCELADA'] },
+        },
+      }),
+      prisma.factura.aggregate({
+        _sum: { total: true },
+        where: {
+          fecha: { gte: inicioMes },
+          estado: { notIn: ['BORRADOR', 'CANCELADA'] },
+        },
+      }),
+      prisma.factura.groupBy({
+        by: ['estado'],
+        _count: { id: true },
+        _sum: { total: true },
+        where: {
+          fecha: { gte: hace30Dias },
+        },
+      }),
     ]);
+
+    // Facturas por mes (últimos 6 meses)
+    const facturasPorMes = await this.obtenerFacturasPorMes(6);
 
     return {
       totalFacturas,
@@ -519,12 +556,58 @@ export class ServicioFacturas {
         timbradas: totalTimbradas,
         pagadas: totalPagadas,
         vencidas: totalVencidas,
+        canceladas: totalCanceladas,
       },
       montos: {
-        total: montoTotal._sum.total || 0,
-        pagado: montoPagado._sum.total || 0,
-        porCobrar: (montoTotal._sum.total?.toNumber() || 0) - (montoPagado._sum.total?.toNumber() || 0),
+        total: Number(montoTotal._sum.total || 0),
+        pagado: Number(montoPagado._sum.total || 0),
+        porCobrar: Number(montoTotal._sum.total || 0) - Number(montoPagado._sum.total || 0),
       },
+      delMes: {
+        cantidad: facturasDelMes,
+        monto: Number(montosDelMes._sum.total || 0),
+      },
+      ultimos30Dias: facturasUltimos30Dias.map((item) => ({
+        estado: item.estado,
+        cantidad: item._count.id,
+        monto: Number(item._sum.total || 0),
+      })),
+      facturasPorMes,
     };
+  }
+
+  private static async obtenerFacturasPorMes(meses: number = 6) {
+    const resultado = [];
+    const hoy = new Date();
+
+    for (let i = meses - 1; i >= 0; i--) {
+      const fecha = new Date(hoy.getFullYear(), hoy.getMonth() - i, 1);
+      const inicioMes = new Date(fecha.getFullYear(), fecha.getMonth(), 1);
+      const finMes = new Date(fecha.getFullYear(), fecha.getMonth() + 1, 0);
+
+      const [cantidad, montos] = await Promise.all([
+        prisma.factura.count({
+          where: {
+            fecha: { gte: inicioMes, lte: finMes },
+            estado: { notIn: ['BORRADOR', 'CANCELADA'] },
+          },
+        }),
+        prisma.factura.aggregate({
+          _sum: { total: true },
+          where: {
+            fecha: { gte: inicioMes, lte: finMes },
+            estado: { notIn: ['BORRADOR', 'CANCELADA'] },
+          },
+        }),
+      ]);
+
+      resultado.push({
+        mes: fecha.toLocaleDateString('es-MX', { month: 'short', year: 'numeric' }),
+        cantidad,
+        monto: Number(montos._sum.total || 0),
+      });
+    }
+
+    return resultado;
   }
 }

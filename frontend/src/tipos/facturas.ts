@@ -120,10 +120,25 @@ export interface EstadisticasFacturas {
     timbradas: number;
     pagadas: number;
     vencidas: number;
+    canceladas: number;
   };
   montos: {
     total: number;
     pagado: number;
     porCobrar: number;
   };
+  delMes: {
+    cantidad: number;
+    monto: number;
+  };
+  ultimos30Dias: Array<{
+    estado: string;
+    cantidad: number;
+    monto: number;
+  }>;
+  facturasPorMes: Array<{
+    mes: string;
+    cantidad: number;
+    monto: number;
+  }>;
 }

@@ -5,7 +5,7 @@ import { useAutenticacion } from '@/contextos/ContextoAutenticacion';
 import { Button } from '@/componentes/ui/button';
 import { Input } from '@/componentes/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/componentes/ui/card';
-import { Plus, Search, ArrowLeft, FileText, Eye, Download } from 'lucide-react';
+import { Plus, Search, ArrowLeft, FileText, Eye, Download, BarChart3 } from 'lucide-react';
 import FormularioFactura from '@/componentes/facturas/FormularioFactura';
 import type { Factura, FiltrosFactura, CrearFacturaInput } from '@/tipos/facturas';
 
@@ -179,10 +179,16 @@ export default function Facturas() {
           <CardHeader>
             <div className="flex justify-between items-center">
               <CardTitle>Gestión de Facturas</CardTitle>
-              <Button onClick={() => setModoFormulario(true)}>
-                <Plus className="h-4 w-4 mr-2" />
-                Nueva Factura
-              </Button>
+              <div className="flex gap-2">
+                <Button variant="outline" onClick={() => navigate('/facturas/dashboard')}>
+                  <BarChart3 className="h-4 w-4 mr-2" />
+                  Dashboard
+                </Button>
+                <Button onClick={() => setModoFormulario(true)}>
+                  <Plus className="h-4 w-4 mr-2" />
+                  Nueva Factura
+                </Button>
+              </div>
             </div>
           </CardHeader>
           <CardContent>
